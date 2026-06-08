@@ -1,0 +1,20 @@
+{
+  "overview": "A desktop app for designing app specifications through visual selection, with a calm Apple-style aesthetic and per-mode color accents.",
+  "features": [
+    "Click-only Design flow assembling a real spec live",
+    "Apple-style default theme with warm per-mode accent colors",
+    "Classic Caffeine terminal theme as an optional toggle",
+    "Five modes: Design, Develop, Organize, Live, Market",
+    "Plain-English language throughout — no technical jargon",
+    "Live app management with friendly metrics dashboard"
+  ],
+  "category": "productivity",
+  "tags": [
+    "design-tool",
+    "spec-builder",
+    "productivity",
+    "app-designer",
+    "visual-design"
+  ],
+  "last_updated": "2026-06-07T16:06:06.667Z"
+}

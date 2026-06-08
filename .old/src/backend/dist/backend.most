@@ -1,0 +1,85 @@
+// Version: 1.0.0
+type AppCategory__115075400 =
+  {
+    #booking;
+    #clubManager;
+    #contentCms;
+    #dashboard;
+    #internalTool;
+    #marketplace;
+    #other;
+    #social;
+    #tracker
+  };
+type BuilderMode__545130179 = {#feel; #guided; #standard};
+type Data__80296667<K, V> =
+  {var count : Nat__1040412405; kvs : [var ?(K, V)]};
+type DeploymentStatus__249372923 = {#failed; #live; #notDeployed};
+type Internal__41346355<K, V> =
+  {children : [var ?Node__1000929467<K, V>]; data : Data__80296667<K, V>};
+type Leaf__712614010<K, V> = {data : Data__80296667<K, V>};
+type Maturity__681713065 = {#building; #defining; #exploring; #idea; #live};
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__1000929467<K, V> =
+  {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type OrganizeFilters__30821947 =
+  {
+    deploymentStatus : ?{#failed; #live; #notDeployed};
+    maturity : ?{#building; #defining; #exploring; #idea; #live};
+    priority : ?{#high; #low; #medium};
+    tags : [Text]
+  };
+type Priority__752769076 = {#high; #low; #medium};
+type ProjectId__478417951 = Text;
+type ProjectMetadata__963739349 =
+  {
+    attentionFlag : Bool;
+    builderMode : BuilderMode__545130179;
+    maturity : Maturity__681713065;
+    priority : ?Priority__752769076;
+    tags : [Text]
+  };
+type ProjectVersion__169868965 =
+  {
+    changeSummary : Text;
+    specSnapshot : Text;
+    timestamp : Timestamp__301639476;
+    version : Text
+  };
+type Project__720644384 =
+  {
+    answers : Text;
+    category : AppCategory__115075400;
+    createdAt : Timestamp__301639476;
+    deploymentStatus : DeploymentStatus__249372923;
+    icon : Text;
+    iconColor : Text;
+    id : ProjectId__478417951;
+    metadata : ProjectMetadata__963739349;
+    name : Text;
+    specSections : [SpecSection__1050413585];
+    updatedAt : Timestamp__301639476;
+    versionHistory : [ProjectVersion__169868965]
+  };
+type SortBy__12613738 = {#createdAt; #name; #priority; #updatedAt};
+type SpecSection__1050413585 = {content : Text; heading : Text};
+type Timestamp__301639476 = Int;
+type UIState__915350733 =
+  {
+    activeMode : Text;
+    activeProjectId : ?Text;
+    organizeFilters : OrganizeFilters__30821947;
+    organizeSortBy : SortBy__12613738;
+    sidebarCollapsed : Bool
+  };
+actor {
+  stable idState : {var nextId : Nat};
+  stable onboardingHolder : {var complete : Bool};
+  stable projects :
+    {
+      var root : Node__1000929467<ProjectId__478417951, Project__720644384>;
+      var size : Nat__1040412405
+    };
+  stable uiHolder : {var current : ?UIState__915350733}
+};

@@ -1,0 +1,138 @@
+type UIState = 
+ record {
+   activeMode: text;
+   activeProjectId: opt text;
+   organizeFilters: OrganizeFilters;
+   organizeSortBy: SortBy;
+   sidebarCollapsed: bool;
+ };
+type Timestamp = int;
+type SpecSection = 
+ record {
+   content: text;
+   heading: text;
+ };
+type SortBy = 
+ variant {
+   createdAt;
+   name;
+   priority;
+   updatedAt;
+ };
+type ProjectVersion = 
+ record {
+   changeSummary: text;
+   specSnapshot: text;
+   timestamp: Timestamp;
+   version: text;
+ };
+type ProjectMetadata = 
+ record {
+   attentionFlag: bool;
+   builderMode: BuilderMode;
+   maturity: Maturity;
+   priority: opt Priority;
+   tags: vec text;
+ };
+type ProjectId = text;
+type Project = 
+ record {
+   answers: text;
+   category: AppCategory;
+   createdAt: Timestamp;
+   deploymentStatus: DeploymentStatus;
+   icon: text;
+   iconColor: text;
+   id: ProjectId;
+   metadata: ProjectMetadata;
+   name: text;
+   specSections: vec SpecSection;
+   updatedAt: Timestamp;
+   versionHistory: vec ProjectVersion;
+ };
+type Priority = 
+ variant {
+   high;
+   low;
+   medium;
+ };
+type OrganizeFilters = 
+ record {
+   deploymentStatus: opt variant {
+                           failed;
+                           live;
+                           notDeployed;
+                         };
+   maturity: opt variant {
+                   building;
+                   defining;
+                   exploring;
+                   idea;
+                   live;
+                 };
+   priority: opt variant {
+                   high;
+                   low;
+                   medium;
+                 };
+   tags: vec text;
+ };
+type MetadataUpdate = 
+ record {
+   attentionFlag: bool;
+   builderMode: BuilderMode;
+   maturity: Maturity;
+   priority: opt Priority;
+   tags: vec text;
+ };
+type Maturity = 
+ variant {
+   building;
+   defining;
+   exploring;
+   idea;
+   live;
+ };
+type DeploymentStatus = 
+ variant {
+   failed;
+   live;
+   notDeployed;
+ };
+type BuilderMode = 
+ variant {
+   feel;
+   guided;
+   standard;
+ };
+type AppCategory = 
+ variant {
+   booking;
+   clubManager;
+   contentCms;
+   dashboard;
+   internalTool;
+   marketplace;
+   other;
+   social;
+   tracker;
+ };
+service : {
+  createProject: (name: text, icon: text, iconColor: text, category:
+   AppCategory) -> (Project);
+  deleteProject: (id: ProjectId) -> (bool);
+  duplicateProject: (id: ProjectId, newName: text) -> (opt Project);
+  getProject: (id: ProjectId) -> (opt Project) query;
+  getUIState: () -> (opt UIState) query;
+  isOnboardingComplete: () -> (bool) query;
+  isSampleProject: (id: ProjectId) -> (bool) query;
+  listProjects: () -> (vec Project) query;
+  markOnboardingComplete: () -> ();
+  saveUIState: (state: UIState) -> ();
+  seedSampleProjects: () -> (vec Project);
+  updateProjectAnswers: (id: ProjectId, answers: text) -> (opt Project);
+  updateProjectMetadata: (id: ProjectId, metadata: MetadataUpdate) ->
+   (opt Project);
+  updateProjectSpec: (id: ProjectId, sections: vec SpecSection) ->
+   (opt Project);
+}
